@@ -23,7 +23,7 @@ function DashboardCard01() {
     var int_median = 0;
     var arr_age = []
     
-    axios.get('http://127.0.0.1:8000/angular/api_players').then(res => {
+    axios.get('http://127.0.0.1:8000/pl_api/api_players').then(res => {
       for(let i = 0; i < res.data.length; i++){
         int_temp_age = int_year - res.data[i].born;
         arr_age.push(int_temp_age);
@@ -105,9 +105,9 @@ function DashboardCard01() {
         {int_num_players}</div>
         <div className="flex items-start">
           <div className="text-3xl font-bold text-slate-800 mr-2">{int_mode_age}</div>
-          <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">Age: Mode</div>
+          <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">Mode</div>
           <div className="text-3xl font-bold text-slate-800 mr-2">{int_median_age}</div>
-          <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">Age: Median</div>
+          <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">Median</div>
         </div>
       </div>
       {/* Chart built with Chart.js 3 */}

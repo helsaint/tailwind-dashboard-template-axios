@@ -22,7 +22,7 @@ function DashboardCard02() {
     var int_games = 0;
     var arr_games = [];
 
-    axios.get('http://127.0.0.1:8000/angular/api_players').then(res => {
+    axios.get('http://127.0.0.1:8000/pl_api/api_players').then(res => {
       for(let i = 0; i < res.data.length; i++){
         int_games = parseFloat(res.data[i].avg_90s_played);
         arr_games.push(int_games);
