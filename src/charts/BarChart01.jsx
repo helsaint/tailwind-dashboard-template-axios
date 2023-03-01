@@ -67,10 +67,13 @@ function BarChart01({
           },
           tooltip: {
             callbacks: {
-              title: () => false, // Disable tooltip title
+              //title: () => false, // Disable tooltip title
               if(currency = true){
                 label: (context) => formatValueCurrency(context.parsed.y);
               },
+              title: function(context){
+                return "x: " + context[0].label;
+              }
             },
           },
         },

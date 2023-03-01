@@ -1,59 +1,59 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import LineChart from '../../charts/LineChart01';
+import BarChart from '../../charts/BarChart01';
 import Icon from '../../images/icon-03.svg';
 import EditMenu from '../EditMenu';
+import axios from 'axios';
 
 // Import utilities
 import { tailwindConfig, hexToRGB } from '../../utils/Utils';
 
 function DashboardCard03() {
 
+  const [isLoading, setLoading] = useState(true);
+  const [dict_teams, setDictTeams] = useState();
+
+  useEffect(() => {
+    var temp_dict = {};
+    var int_gca = 0;
+    var str_team = "";
+
+    axios.get('http://127.0.0.1:8000/pl_api/api_players').then(res => {
+      for(let i = 0; i < res.data.length; i++){
+        str_team = res.data[i].squad;
+        int_gca = parseInt(res.data[i].gca);
+        if(str_team in temp_dict){
+          temp_dict[str_team] += int_gca;
+        }else{
+          temp_dict[str_team] = int_gca;
+        }
+      }
+
+      setDictTeams(temp_dict);
+      setLoading(false);
+
+    });
+
+  },[]);
+
+  if (isLoading) {
+    return <div className="App">Cunxieing...</div>;
+  };
+
   const chartData = {
-    labels: [
-      '12-01-2020', '01-01-2021', '02-01-2021',
-      '03-01-2021', '04-01-2021', '05-01-2021',
-      '06-01-2021', '07-01-2021', '08-01-2021',
-      '09-01-2021', '10-01-2021', '11-01-2021',
-      '12-01-2021', '01-01-2022', '02-01-2022',
-      '03-01-2022', '04-01-2022', '05-01-2022',
-      '06-01-2022', '07-01-2022', '08-01-2022',
-      '09-01-2022', '10-01-2022', '11-01-2022',
-      '12-01-2022', '01-01-2023',
-    ],
+    labels: Object.keys(dict_teams),
     datasets: [
       // Indigo line
       {
-        data: [
-          540, 466, 540, 466, 385, 432, 334,
-          334, 289, 289, 200, 289, 222, 289,
-          289, 403, 554, 304, 289, 270, 134,
-          270, 829, 344, 388, 364,
-        ],
+        data: Object.values(dict_teams),
         fill: true,
-        backgroundColor: `rgba(${hexToRGB(tailwindConfig().theme.colors.blue[500])}, 0.08)`,
+        backgroundColor: 'rgba(${hexToRGB(tailwindConfig().theme.colors.blue[500])}, 0.08)',
         borderColor: tailwindConfig().theme.colors.indigo[500],
         borderWidth: 2,
         tension: 0,
         pointRadius: 0,
         pointHoverRadius: 3,
         pointBackgroundColor: tailwindConfig().theme.colors.indigo[500],
-        clip: 20,
-      },
-      // Gray line
-      {
-        data: [
-          689, 562, 477, 477, 477, 477, 458,
-          314, 430, 378, 430, 498, 642, 350,
-          145, 145, 354, 260, 188, 188, 300,
-          300, 282, 364, 660, 554,
-        ],
-        borderColor: tailwindConfig().theme.colors.slate[300],
-        borderWidth: 2,
-        tension: 0,
-        pointRadius: 0,
-        pointHoverRadius: 3,
-        pointBackgroundColor: tailwindConfig().theme.colors.slate[300],
         clip: 20,
       },
     ],
@@ -88,7 +88,7 @@ function DashboardCard03() {
       {/* Chart built with Chart.js 3 */}
       <div className="grow">
         {/* Change the height attribute to adjust the chart height */}
-        <LineChart data={chartData} width={389} height={128} />
+        <BarChart data={chartData} width={389} height={128} currency={false} />
       </div>
     </div>
   );
