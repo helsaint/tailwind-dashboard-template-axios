@@ -12,24 +12,62 @@ function DashboardCard03() {
 
   const [isLoading, setLoading] = useState(true);
   const [dict_teams, setDictTeams] = useState();
+  const [intMode, setMode] = useState();
+  const [intMedian, setMedian] = useState();
 
   useEffect(() => {
     var temp_dict = {};
-    var int_gca = 0;
+    var int_count = 0;
     var str_team = "";
+    var int_mode = 0;
+    var int_median = 0;
 
     axios.get('http://127.0.0.1:8000/pl_api/api_players').then(res => {
       for(let i = 0; i < res.data.length; i++){
         str_team = res.data[i].squad;
-        int_gca = parseInt(res.data[i].gca);
         if(str_team in temp_dict){
-          temp_dict[str_team] += int_gca;
+          temp_dict[str_team] += 1;
         }else{
-          temp_dict[str_team] = int_gca;
+          temp_dict[str_team] = 1;
         }
       }
 
-      setDictTeams(temp_dict);
+      int_mode = Math.max.apply(Math,Object.values(temp_dict));
+      var arr_size = Object.values(temp_dict);
+      arr_size.sort();
+      if((arr_size.length % 2) == 0){
+        var int_mid = arr_size.length/2;
+        int_median = arr_size[int_mid-1]
+      }else{
+        var int_mid = Math.floor(arr_size.length/2);
+        int_median = arr_size[int_mid + 1];
+      }
+
+      
+      var dict_reverse = {};
+      for(let key in temp_dict){
+        var temp_array = [];
+        var int_temp = temp_dict[key];
+        if(int_temp in dict_reverse){
+          temp_array = dict_reverse[int_temp];
+          temp_array.push(key);
+          dict_reverse[int_temp] = temp_array;
+        }else{
+          temp_array.push(key);
+          dict_reverse[int_temp] = temp_array;
+        }
+      }
+
+      var dict_final = {}
+      for(let size in dict_reverse){
+        for(let l in dict_reverse[size]){
+          dict_final[dict_reverse[size][l]] = parseInt(size);
+        }
+      }
+
+      setDictTeams(dict_final);
+      setMode(int_mode);
+      setMedian(int_median);
       setLoading(false);
 
     });
@@ -78,11 +116,13 @@ function DashboardCard03() {
             </li>
           </EditMenu>
         </header>
-        <h2 className="text-lg font-semibold text-slate-800 mb-2">Acme Professional</h2>
-        <div className="text-xs font-semibold text-slate-400 uppercase mb-1">Sales</div>
+        <h2 className="text-lg font-semibold text-slate-800 mb-2">Squad Sizes</h2>
+        <div className="text-xs font-semibold text-slate-400 uppercase mb-1">Squad Stats</div>
         <div className="flex items-start">
-          <div className="text-3xl font-bold text-slate-800 mr-2">$9,962</div>
-          <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">+49%</div>
+          <div className="text-3xl font-bold text-slate-800 mr-2">{intMode}</div>
+          <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">Mode</div>
+          <div className="text-3xl font-bold text-slate-800 mr-2">{intMedian}</div>
+          <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">Median</div>
         </div>
       </div>
       {/* Chart built with Chart.js 3 */}

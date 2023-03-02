@@ -97,7 +97,7 @@ function DashboardCard02() {
           </EditMenu>
         </header>
         <h2 className="text-lg font-semibold text-slate-800 mb-2">Histogram Games Played</h2>
-        <div className="text-xs font-semibold text-slate-400 uppercase mb-1">Total Games Played:
+        <div className="text-xs font-semibold text-slate-400 uppercase mb-1">Games Played:
         </div>
         <div className="flex items-start">
           <div className="text-3xl font-bold text-slate-800 mr-2">{int_mode_games}</div>
