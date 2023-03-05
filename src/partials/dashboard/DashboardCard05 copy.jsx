@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Info from '../../utils/Info';
 import RealtimeChart from '../../charts/RealtimeChart';
-import MapChart01 from '../../charts/MapChart01';
-import axios from 'axios';
 
 // Import utilities
 import { tailwindConfig, hexToRGB } from '../../utils/Utils';
@@ -13,24 +11,6 @@ function DashboardCard05() {
   // Code below is for demo purpose only, and it's not covered by support.
   // If you need to replace dummy data with real data,
   // refer to Chart.js documentation: https://www.chartjs.org/docs/latest
-
-  //useEffect(()=>{
-  //  var parser, xml_rss;
-  //  axios.get('https://www.espn.co.uk/espn/rss/football/news').then(res=>{
-  //    parser = new DOMParser();
-  //    xml_rss = parser.parseFromString(res.data,"text/xml");
-  //    let xml_items = xml_rss.getElementsByTagName("item");
-  //    console.log(xml_items.length);
-  //  });
-  //},[])
-
-  useEffect(()=>{
-    var parser, xml_rss;
-    axios.get('http://127.0.0.1:8000/pl_api/api_players').then(res => {
-      
-    });
-  },[])
-
 
   // Fake real-time data
   const [counter, setCounter] = useState(0);
@@ -112,7 +92,7 @@ function DashboardCard05() {
       </header>
       {/* Chart built with Chart.js 3 */}
       {/* Change the height attribute to adjust the chart height */}
-      <MapChart01 data={chartData} width={595} height={248} />
+      <RealtimeChart data={chartData} width={595} height={248} />
     </div>
   );
 }
