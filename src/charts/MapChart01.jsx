@@ -20,7 +20,7 @@ function MapChart01({
       if(data && isLoading){
 
         const scaleSeries = new AttributeSeriesBuilder("fill")
-        .setScale({1:'#C8EEFF', 2: '#0071A4'})
+        .setScale(['#C8EEFF', '#0071A4'])
         .setValues({"RU":30, "US":10, "BR": 13})
         .setNormalizeFunction("polynomial")
         .build();
@@ -28,12 +28,11 @@ function MapChart01({
         const series = new SeriesBuilder().addRegionsSeries(scaleSeries).build();
         const my_map = new VectorMapBuilder(worldMill).setSeries(series).build(); 
 
-        data1 = [{values:{"RU":30, "US":10, "CA": 13},
+        data1 = [{values:data,
         scale: ["#C8EEFF", "#0071A4"],
         normalizeFunction: "polynomial",}];
 
-        console.log(series);
-        console.log(data1);
+        //console.log(data);
 
         setMapName(worldMill);
         setRegionsSeries(data1);
@@ -58,6 +57,9 @@ function MapChart01({
           <VectorMap
           map={map_name}
           series={{regions:regions_series}}
+          onRegionTipShow = {(e,el, code) => {
+            el.html(el.html() + " (# - " + regions_series[0].values[code] + ")");
+          }}
           />
         </div>
         </React.Fragment>
