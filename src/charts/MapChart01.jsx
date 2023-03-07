@@ -9,9 +9,6 @@ function MapChart01({
     height
   }) {
 
-    const canvas = useRef(null);
-    const map_ref = useRef(null);
-    const map_series = useRef(null)
     const [isLoading, setLoading] = useState(true);
     const [map_name, setMapName] = useState();
     const [regions_series, setRegionsSeries] = useState();
@@ -19,10 +16,8 @@ function MapChart01({
     var data1 = [];
 
     useEffect(()=>{
-      console.log(data);
 
       if(data && isLoading){
-        const ctx = canvas.current;
 
         const scaleSeries = new AttributeSeriesBuilder("fill")
         .setScale({1:'#C8EEFF', 2: '#0071A4'})
@@ -32,19 +27,16 @@ function MapChart01({
 
         const series = new SeriesBuilder().addRegionsSeries(scaleSeries).build();
         const my_map = new VectorMapBuilder(worldMill).setSeries(series).build(); 
-        map_ref.current = worldMill;
-        map_series.current = series;
-        canvas.current = my_map;
 
-        data1 = [{values:{"RU":30, "US":10, "CA": 13}},
-            {scale: ['#C8EEFF', '#0071A4']},
-            {normalizeFunction:"polynomial"}];
+        data1 = [{values:{"RU":30, "US":10, "CA": 13},
+        scale: ["#C8EEFF", "#0071A4"],
+        normalizeFunction: "polynomial",}];
 
         console.log(series);
         console.log(data1);
 
         setMapName(worldMill);
-        setRegionsSeries(series);
+        setRegionsSeries(data1);
         setLoading(false);
 
     }},[]);
@@ -65,7 +57,7 @@ function MapChart01({
           <div className='grow'>
           <VectorMap
           map={map_name}
-          series={{regions_series}}
+          series={{regions:regions_series}}
           />
         </div>
         </React.Fragment>
