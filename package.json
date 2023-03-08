@@ -2,7 +2,8 @@
   "name": "mosaic-react",
   "version": "0.1.0",
   "engines": {
-    "node": "18.x"
+    "node": "18.14.1",
+    "npm": "9.6.1"
   },
   "scripts": {
     "dev": "vite",
