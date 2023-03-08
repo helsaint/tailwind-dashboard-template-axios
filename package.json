@@ -2,7 +2,7 @@
   "name": "mosaic-react",
   "version": "0.1.0",
   "engines": {
-    "node":"18.x"
+    "node": "18.x"
   },
   "scripts": {
     "dev": "vite",
@@ -36,6 +36,6 @@
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.6",
-    "vite": "^4.1.1"
+    "vite": "^4.1.4"
   }
 }
