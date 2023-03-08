@@ -1,9 +1,13 @@
 {
   "name": "mosaic-react",
   "version": "0.1.0",
+  "engines": {
+    "node":"18.x"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "start": "vite",
     "preview": "vite preview"
   },
   "dependencies": {
