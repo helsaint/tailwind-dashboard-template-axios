@@ -27,7 +27,8 @@ If you need the design files, you can download them from Figma's Community 👉 
   * [Compiles and hot-reloads for development](#compiles-and-hot-reloads-for-development)
   * [Compiles and minifies for production](#compiles-and-minifies-for-production)
   * [Customize configuration](#customize-configuration)
-* [Support notes](#support-notes)            
+* [Support notes](#support-notes)
+* [Deploy to Heroku](#heroku-deployment)          
 * [Credits](#credits)
 * [Terms and License](#terms-and-license)
 * [About Us](#about-us)
@@ -59,6 +60,18 @@ See [Configuration Reference](https://vitejs.dev/guide/).
 We are shipping our templates with a very basic React configuration to let you quickly get into the development process, but we don't discourage you from using any other configuration or framework built on the top of React. So, please note that any request dealing with React (e.g. extra features, customisations, et cetera) is to be considered out of the support scope.
 
 For more information about what support covers, please see our (FAQs)[https://cruip.com/faq/].
+
+### Heroku Deployment
+1. Go to Heroku app->Settings->Buildpack and choose Node.js
+2. Create static.json in the root file (same location as package.json etc) and add:
+    {
+    "root": "./dist"
+  }
+3. In package.json update engine specifying the node and npm versions
+4. In package.json within scripts add "preview": "vite --host 0.0.0.0 --port $PORT preview"
+5. Create a Procfile win the root directory adding:
+    web: npm run build
+    web: npm run preview
 
 ## Credits
 
