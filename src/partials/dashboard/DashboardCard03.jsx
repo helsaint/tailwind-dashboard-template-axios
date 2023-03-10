@@ -22,7 +22,7 @@ function DashboardCard03() {
     var int_mode = 0;
     var int_median = 0;
 
-    axios.get('http://127.0.0.1:8000/pl_api/api_players').then(res => {
+    axios.get('https://dashboards.aramotar.com/pl_api/api_players').then(res => {
       for(let i = 0; i < res.data.length; i++){
         str_team = res.data[i].squad;
         if(str_team in temp_dict){

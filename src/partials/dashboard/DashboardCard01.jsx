@@ -57,7 +57,7 @@ function DashboardCard01() {
   }, []);
 
   if (isLoading) {
-    return <div className="App">Loading...</div>;
+    return <div className="App">Cunxeing...</div>;
   }
 
 

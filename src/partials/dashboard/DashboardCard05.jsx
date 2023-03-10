@@ -28,7 +28,7 @@ function DashboardCard05() {
     var str_nation = "";
     var temp_dict = {};
     
-    axios.get('http://127.0.0.1:8000/pl_api/api_players').then(res => {
+    axios.get('https://dashboards.aramotar.com/pl_api/api_players').then(res => {
       for(let i = 0; i < res.data.length; i++){
         try{
           str_nation = res.data[i].nation.slice(0,2);
@@ -59,7 +59,7 @@ function DashboardCard05() {
   },[])
 
   if (isLoading) {
-    return <div className="App">Loading...</div>;
+    return <div className="App">Cuxeing...</div>;
   }
 
   const chartData = dictCountryPlayers;

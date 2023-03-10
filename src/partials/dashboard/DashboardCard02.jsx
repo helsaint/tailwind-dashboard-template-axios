@@ -22,7 +22,7 @@ function DashboardCard02() {
     var int_games = 0;
     var arr_games = [];
 
-    axios.get('http://127.0.0.1:8000/pl_api/api_players').then(res => {
+    axios.get('https://dashboards.aramotar.com/pl_api/api_players').then(res => {
       for(let i = 0; i < res.data.length; i++){
         int_games = parseFloat(res.data[i].avg_90s_played);
         arr_games.push(int_games);
@@ -55,7 +55,7 @@ function DashboardCard02() {
   },[]);
 
   if (isLoading) {
-    return <div className="App">Loading...</div>;
+    return <div className="App">Cunxeing...</div>;
   };
 
   const chartData = {
