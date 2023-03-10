@@ -23,7 +23,7 @@ function DashboardCard01() {
     var int_median = 0;
     var arr_age = []
     
-    axios.get('http://127.0.0.1:8000/pl_api/api_players').then(res => {
+    axios.get('https://dashboards.aramotar.com/pl_api/api_players').then(res => {
       for(let i = 0; i < res.data.length; i++){
         int_temp_age = int_year - res.data[i].born;
         arr_age.push(int_temp_age);
