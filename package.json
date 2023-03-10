@@ -10,7 +10,8 @@
     "build": "tsc && vite build",
     "postinstall": "npm run build",
     "serve-heroku": "vite --host 0.0.0.0 --port $PORT preview",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "vite start"
   },
   "dependencies": {
     "@react-jvectormap/core": "^1.0.4",
