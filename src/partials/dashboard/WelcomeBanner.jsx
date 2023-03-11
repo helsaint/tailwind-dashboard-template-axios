@@ -1,6 +1,20 @@
 import React from 'react';
 
 function WelcomeBanner() {
+  let time_of_day = "";
+  const time = (new Date()).getHours();
+  if(time >= 0 && time < 6 ){
+    time_of_day = "Early Morning?";
+  }else if (time >= 6 && time < 10){
+    time_of_day = "Good Morning";
+  }else if(time >=10 && time < 16){
+    time_of_day = "Good Day";
+  }else if(time >=16 && time < 18){
+    time_of_day = "Good Afternoon";
+  }else{
+    time_of_day = "Good Evening";
+  }
+  
   return (
     <div className="relative bg-indigo-200 p-4 sm:p-6 rounded-sm overflow-hidden mb-8">
 
@@ -48,8 +62,8 @@ function WelcomeBanner() {
 
       {/* Content */}
       <div className="relative">
-        <h1 className="text-2xl md:text-3xl text-slate-800 font-bold mb-1">Good afternoon, Acme Inc. 👋</h1>
-        <p>Here is what’s happening with your projects today:</p>
+        <h1 className="text-2xl md:text-3xl text-slate-800 font-bold mb-1">Good {time_of_day}, Audience. 👋</h1>
+        <p>Here are some attacking stats for first half of the Premier League</p>
       </div>
 
     </div>
