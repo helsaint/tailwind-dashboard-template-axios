@@ -8,6 +8,7 @@ function DashboardCard07() {
   const [isLoading, setLoading] = useState(true);
   const [dict_squad_attacking, setSquadAttack] = useState();
   const [dict_total, setTotal] = useState();
+  const [arr_top_5, setTop5] = useState();
 
   useEffect(() => {
     let int_year = new Date().getFullYear();
@@ -18,6 +19,7 @@ function DashboardCard07() {
     let int_gca = 0;
     let int_age = 0;
     let temp_list = [];
+    let items_to_sort = [];
     axios.get('https://dashboards.aramotar.com/pl_api/api_players').then(res => {
       for(let i=0; i < res.data.length; i++){
         str_squad = res.data[i].squad;
@@ -34,42 +36,37 @@ function DashboardCard07() {
           temp_dict_total[str_squad] += int_sca + int_gca;
         }
         else{
-          temp_list = [int_sca, int_gca, int_sca + int_gca, 1, int_age];
+          temp_list = [int_sca, int_gca, int_sca + int_gca, 1, int_age, pl_badges_link[0][str_squad]];
           temp_dict[str_squad] = temp_list;
           temp_dict_total[str_squad] = int_sca + int_gca;
         }
 
       }
 
+      
+      for(let key in temp_dict_total){
+        items_to_sort.push([key, temp_dict_total[key]])
+      }
+      items_to_sort.sort(function(first, second) {
+        return second[1] - first[1];
+      });
+
+      setSquadAttack(temp_dict);
+      setTotal(temp_dict_total);
+      setTop5(items_to_sort.slice(0, 5));
+      setLoading(false);
+
 
     });
-    
-    setSquadAttack(temp_dict);
-    setTotal(temp_dict_total);
-    setLoading(false);
-
+  
   },[]);
 
   if (isLoading) {
     return <div className="App">Cunxeing...</div>;
   }
-
-  for(let key in dict_squad_attacking){
-    let temp_list = dict_squad_attacking[key];
-    temp_list.push(pl_badges_link[0][key]);
-  }
-
-  let items = Object.keys(dict_total).map(function(key) {
-    return [key, dict_total[key]];
-  });
-  
-  // Sort the array based on the second element
-  items.sort(function(first, second) {
-    return second[1] - first[1];
-  });
   
   // Create a new array with only the first 5 items
-  const arr_top_5 = items.slice(0, 5);
+  const arr_top_5_1 = arr_top_5;
   
   return (
     <div className="col-span-full xl:col-span-8 bg-white shadow-lg rounded-sm border border-slate-200">
@@ -104,7 +101,7 @@ function DashboardCard07() {
             {/* Table body */}
             <tbody className="text-sm font-medium divide-y divide-slate-100">
               {/* Row */}
-              {arr_top_5.map((top_5)=>(
+              {arr_top_5_1.map((top_5)=>(
               <tr key={top_5}>
                 <td className="p-2">
                   <div className="flex items-center">
