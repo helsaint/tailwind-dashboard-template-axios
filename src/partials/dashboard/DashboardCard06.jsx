@@ -50,7 +50,6 @@ function DashboardCard06() {
   const arr_background_color = [];
   const arr_hover_color = [];
   for(let i = 0; i < int_pos;i++){
-    console.log(color_options[i]);
     arr_background_color.push(tailwindConfig().theme.colors[color_options[i]][300]);
     arr_hover_color.push(tailwindConfig().theme.colors[color_options[i]][600]);
   }
