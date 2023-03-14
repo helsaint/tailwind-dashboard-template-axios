@@ -1,11 +1,10 @@
 import React from 'react';
 import {useState, useEffect, createContext} from 'react';
-import pl_badges from '../../data/pl_badges.json';
 import pl_badges_link from '../../data/pl_badges_link.json';
 import axios from 'axios';
 import DashboardCard08 from './DashboardCard08';
 
-export let TOP5 = [];
+export let TOP5 = {};
 
 function DashboardCard07() {
   const [isLoading, setLoading] = useState(true);

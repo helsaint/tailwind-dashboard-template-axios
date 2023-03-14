@@ -13,7 +13,9 @@ Chart.register(LineController, LineElement, Filler, PointElement, LinearScale, T
 function LineChart02({
   data,
   width,
-  height
+  height,
+  currency,
+  goals
 }) {
 
   const canvas = useRef(null);
@@ -39,7 +41,9 @@ function LineChart02({
             },
             ticks: {
               maxTicksLimit: 5,
-              callback: (value) => formatValueCurrency(value),
+              if(currency = true){
+                callback: (value) => formatValueCurrency(value);
+              },
             },
           },
           x: {
@@ -70,7 +74,9 @@ function LineChart02({
           tooltip: {
             callbacks: {
               title: () => false, // Disable tooltip title
-              label: (context) => formatValueCurrency(context.parsed.y),
+              if(currency = true){
+                label: (context) => formatValueCurrency(context.parsed.y);
+              },
             },
           },
         },
@@ -93,7 +99,7 @@ function LineChart02({
             }
             // Reuse the built-in legendItems generator
             const items = c.options.plugins.legend.labels.generateLabels(c);
-            items.slice(0, 2).forEach((item) => {
+            items.slice(0, 5).forEach((item) => {
               const li = document.createElement('li');
               li.style.marginLeft = tailwindConfig().theme.margin[3];
               // Button element
@@ -140,8 +146,8 @@ function LineChart02({
       <div className="px-5 py-3">
         <div className="flex flex-wrap justify-between items-end">
           <div className="flex items-start">
-            <div className="text-3xl font-bold text-slate-800 mr-2">$1,482</div>
-            <div className="text-sm font-semibold text-white px-1.5 bg-yellow-500 rounded-full">-22%</div>
+            <div className="text-3xl font-bold text-slate-800 mr-2">{goals}</div>
+            <div className="text-sm font-semibold text-white px-1.5 bg-yellow-500 rounded-full">Avg: {goals/5}</div>
           </div>
           <div className="grow ml-2 mb-1">
             <ul ref={legend} className="flex flex-wrap justify-end"></ul>
