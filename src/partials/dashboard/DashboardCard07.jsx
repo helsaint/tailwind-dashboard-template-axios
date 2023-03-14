@@ -1,8 +1,10 @@
 import React from 'react';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, createContext} from 'react';
 import pl_badges from '../../data/pl_badges.json';
 import pl_badges_link from '../../data/pl_badges_link.json';
 import axios from 'axios';
+
+const TOP5 = createContext();
 
 function DashboardCard07() {
   const [isLoading, setLoading] = useState(true);
@@ -74,7 +76,7 @@ function DashboardCard07() {
         <h2 className="font-semibold text-slate-800">Top Attacking Teams</h2>
       </header>
       <div className="p-3">
-
+        <TOP5.Provider value={arr_top_5_1}></TOP5.Provider>
         {/* Table */}
         <div className="overflow-x-auto">
           <table className="table-auto w-full">

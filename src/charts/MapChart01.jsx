@@ -1,5 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { tailwindConfig, formatValueCurrency } from '../utils/Utils';
+import React, { useEffect, useState } from 'react';
 import { VectorMap, VectorMapBuilder, SeriesBuilder, AttributeSeriesBuilder } from '@react-jvectormap/core';
 import { worldMill } from '@react-jvectormap/world';
 

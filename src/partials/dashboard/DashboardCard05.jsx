@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Info from '../../utils/Info';
-import RealtimeChart from '../../charts/RealtimeChart';
 import MapChart01 from '../../charts/MapChart01';
 import axios from 'axios';
 
 // Import utilities
-import { tailwindConfig, hexToRGB } from '../../utils/Utils';
 
 function DashboardCard05() {
 

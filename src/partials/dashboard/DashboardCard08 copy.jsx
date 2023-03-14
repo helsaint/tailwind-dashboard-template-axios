@@ -1,26 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import LineChart from '../../charts/LineChart02';
-
 
 // Import utilities
 import { tailwindConfig } from '../../utils/Utils';
-import axios from 'axios';
 
 function DashboardCard08() {
-
-  const [isLoading, setLoading] = useState(true);
-
-  useEffect(()=>{
-    axios.get('http://127.0.0.1:8000/fpl_page/fpl_api').then(res => {
-      console.log(res.data);
-
-      setLoading(false);
-    });
-  },[])
-
-  if (isLoading) {
-    return <div className="App">Cuxeing...</div>;
-  }
 
   const chartData = {
     labels: [
