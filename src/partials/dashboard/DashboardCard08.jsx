@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import LineChart from '../../charts/LineChart02';
+import { TOP5 } from './DashboardCard07';
 
 
 // Import utilities
@@ -13,7 +14,7 @@ function DashboardCard08() {
   useEffect(()=>{
     axios.get('http://127.0.0.1:8000/fpl_page/fpl_api').then(res => {
       console.log(res.data);
-
+      console.log(TOP5);
       setLoading(false);
     });
   },[])
