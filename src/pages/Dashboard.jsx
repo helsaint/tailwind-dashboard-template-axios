@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
@@ -20,11 +20,16 @@ import DashboardCard11 from '../partials/dashboard/DashboardCard11';
 import DashboardCard12 from '../partials/dashboard/DashboardCard12';
 import DashboardCard13 from '../partials/dashboard/DashboardCard13';
 import Banner from '../partials/Banner';
+import { DataContext} from '../utils/Context';
+import DataRetrieval from '../partials/actions/DataRetrieval';
 
 function Dashboard() {
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  let DataSet = {};
+  let isDataSetLoaded = true;
+  let strTest = "ALEXEI is the KING";
+  DataSet = DataRetrieval();
+  
   return (
     <div className="flex h-screen overflow-hidden">
 
@@ -88,7 +93,9 @@ function Dashboard() {
               {/* Line chart (Sales Over Time) */}
               <DashboardCard08 />
               {/* Stacked bar chart (Sales VS Refunds) */}
-              <DashboardCard09 />
+              {/*<DataContext.Provider value={DataSet}>*/}
+              <DashboardCard09 DataSet={DataSet}/>
+              {/*</DataContext.Provider>*/}
               {/* Card (Customers) */}
               <DashboardCard10 />
               {/* Card (Reasons for Refunds) */}

@@ -1,15 +1,13 @@
 import React from 'react';
-import {useState, useEffect, createContext} from 'react';
+import {useState, useEffect, useContext, createContext} from 'react';
 import pl_badges_link from '../../data/pl_badges_link.json';
 import axios from 'axios';
-import DashboardCard08 from './DashboardCard08';
 
 export let TOP5 = {};
 
 function DashboardCard07() {
   const [isLoading, setLoading] = useState(true);
   const [dict_squad_attacking, setSquadAttack] = useState();
-  const [dict_total, setTotal] = useState();
   const [arr_top_5, setTop5] = useState();
 
   useEffect(() => {
@@ -54,7 +52,6 @@ function DashboardCard07() {
       });
 
       setSquadAttack(temp_dict);
-      setTotal(temp_dict_total);
       setTop5(items_to_sort.slice(0, 5));
       setLoading(false);
 
@@ -70,7 +67,6 @@ function DashboardCard07() {
   // Create a new array with only the first 5 items
   const arr_top_5_1 = arr_top_5;
   TOP5 = arr_top_5;
-  
   return (
     <div className="col-span-full xl:col-span-8 bg-white shadow-lg rounded-sm border border-slate-200">
       <header className="px-5 py-4 border-b border-slate-100">

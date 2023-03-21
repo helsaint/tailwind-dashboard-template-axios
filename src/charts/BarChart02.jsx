@@ -13,12 +13,14 @@ Chart.register(BarController, BarElement, LinearScale, TimeScale, Tooltip, Legen
 function BarChart02({
   data,
   width,
-  height
+  height,
+  currency,
 }) {
-
   const canvas = useRef(null);
-
   useEffect(() => {
+    if(data && canvas.current){
+
+      console.log("Bar2:", data);
     const ctx = canvas.current;
     // eslint-disable-next-line no-unused-vars
     const chart = new Chart(ctx, {
@@ -42,19 +44,21 @@ function BarChart02({
             beginAtZero: true,
             ticks: {
               maxTicksLimit: 5,
-              callback: (value) => formatValueCurrency(value),
+              if(currency = true){
+                callback: (value) => formatValueCurrency(value);
+              },
             },
           },
           x: {
             stacked: true,
-            type: 'time',
-            time: {
-              parser: 'MM-DD-YYYY',
-              unit: 'month',
-              displayFormats: {
-                month: 'MMM YY',
-              },
-            },
+            //type: 'time',
+            //time: {
+            //  parser: 'MM-DD-YYYY',
+            //  unit: 'month',
+            //  displayFormats: {
+            //    month: 'MMM YY',
+            //  },
+            //},
             border: {
               display: false,
             },
@@ -73,8 +77,10 @@ function BarChart02({
           },
           tooltip: {
             callbacks: {
-              title: () => false, // Disable tooltip title
-              label: (context) => formatValueCurrency(context.parsed.y),
+              //title: () => false, // Disable tooltip title
+              if(currency = true){
+                label: (context) => formatValueCurrency(context.parsed.y);
+              },
             },
           },
         },
@@ -91,7 +97,7 @@ function BarChart02({
     });
     return () => chart.destroy();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }}, []);
 
   return (
     <canvas ref={canvas} width={width} height={height}></canvas>

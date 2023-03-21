@@ -14,8 +14,7 @@ function DashboardCard08() {
   const [time_series_goals_by_top5, setTimeSeries] = useState();
   const [games_played, setGamesPlayed] = useState();
   const [goals_scored, setGoalsScored] = useState();
-
-
+  
   useEffect(()=>{
     let dict_temp = {};
     let dict_top5 = {};
@@ -47,8 +46,10 @@ function DashboardCard08() {
         dict_temp[pl_clubs_alias[0][key]] = dict_temp[key];
       }
 
+      
       let int_games = 0;
       let int_goals = 0;
+      
       for(let key in TOP5){
         let str_temp = TOP5[key][0];
         dict_top5[str_temp] = dict_temp[str_temp];
@@ -60,18 +61,22 @@ function DashboardCard08() {
           int_goals
         );
       }
+      
       setGoalsScored(int_goals);
-      setGamesPlayed(int_games)
+      setGamesPlayed(int_games);
       setTimeSeries(dict_top5);
       setLoading(false);
+    }).catch((exception) => {
+      console.log("PL Site Broken")
     });
     
-  },[])
+  },[]);
+
 
   if (isLoading) {
-    return <div className="App">Cuxeing...</div>;
+    return <div className="App">Cunxeing...</div>;
   }
-
+  
   const arr_teams = Object.keys(time_series_goals_by_top5);
   let arr_labels = [];
   for(let i = 0; i < games_played; i++){
