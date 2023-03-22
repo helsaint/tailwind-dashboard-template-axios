@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 
-function DataRetrieval(){
-    const data = "ALEXEI is a MORON";
+export function DataRetrieval(){
     const [isTop5Loading, setLoading] = useState(true);
     const [arr_top_5, setTop5] = useState();
     
@@ -46,4 +45,39 @@ function DataRetrieval(){
     return [arr_top_5, isTop5Loading];
 };
 
-export default DataRetrieval;
+export function PlayerScoreRetrieval(){
+  const [isLoading, setLoading] = useState(true);
+  const [dictTop10Players, setTop10Players] = useState();
+
+  useEffect(()=>{
+    let temp_array = [];
+    let temp_dict = {};
+    let temp_name = "";
+    let temp_sca = 0;
+    let temp_gca = 0;
+    let temp_gca_sca = 0;
+    axios.get('https://dashboards.aramotar.com/pl_api/api_players').then(res => {
+      for(let i = 0; i < res.data.length; i++){
+        temp_dict = {};
+        temp_name = res.data[i].player;
+        temp_sca = res.data[i].sca;
+        temp_gca = res.data[i].gca;
+        temp_gca_sca = temp_gca + temp_sca;
+        temp_dict['name'] = temp_name;
+        temp_dict['sca'] = temp_sca;
+        temp_dict['gca'] = temp_gca;
+        temp_dict['total'] = temp_gca_sca;
+        temp_array.push(temp_dict);
+      }
+      temp_array.sort(function(a,b){
+        return b.total - a.total
+      })
+      setTop10Players(temp_array.slice(0,5));
+      setLoading(false);
+  });
+  },[]);
+
+  return [dictTop10Players,isLoading];
+};
+
+//export default DataRetrieval;

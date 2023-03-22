@@ -20,15 +20,16 @@ import DashboardCard11 from '../partials/dashboard/DashboardCard11';
 import DashboardCard12 from '../partials/dashboard/DashboardCard12';
 import DashboardCard13 from '../partials/dashboard/DashboardCard13';
 import Banner from '../partials/Banner';
-import { DataContext} from '../utils/Context';
-import DataRetrieval from '../partials/actions/DataRetrieval';
+import { DataContext, PlayerScoreContext} from '../utils/Context';
+import {DataRetrieval, PlayerScoreRetrieval} from '../partials/actions/DataRetrieval';
 
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   let DataSet = {};
-  let isDataSetLoaded = true;
-  let strTest = "ALEXEI is the KING";
   DataSet = DataRetrieval();
+
+  let DataPlayerScore = {};
+  DataPlayerScore = PlayerScoreRetrieval();
   
   return (
     <div className="flex h-screen overflow-hidden">
@@ -97,7 +98,9 @@ function Dashboard() {
               <DashboardCard09 DataSet={DataSet}/>
               {/*</DataContext.Provider>*/}
               {/* Card (Customers) */}
+              <PlayerScoreContext.Provider value={DataPlayerScore}>
               <DashboardCard10 />
+              </PlayerScoreContext.Provider>
               {/* Card (Reasons for Refunds) */}
               <DashboardCard11 />
               {/* Card (Recent Activity) */}
