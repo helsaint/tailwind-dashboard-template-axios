@@ -19,8 +19,7 @@ function BarChart02({
   const canvas = useRef(null);
   useEffect(() => {
     if(data && canvas.current){
-
-      console.log("Bar2:", data);
+      
     const ctx = canvas.current;
     // eslint-disable-next-line no-unused-vars
     const chart = new Chart(ctx, {

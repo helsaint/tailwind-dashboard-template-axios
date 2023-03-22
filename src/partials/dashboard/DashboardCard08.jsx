@@ -22,7 +22,7 @@ function DashboardCard08() {
     let set_temp = new Set();
     let str_squadH = "";
     let str_squadA = "";
-    axios.get('http://127.0.0.1:8000/fpl_page/fpl_api').then(res => {
+    axios.get('https://dashboards.aramotar.com/pl_results_api/pl_results_api').then(res => {
       for(let i = 0; i < res.data.length; i++){
         set_temp.add(res.data[i].RoundNumber);
         str_squadA = res.data[i].AwayTeam;

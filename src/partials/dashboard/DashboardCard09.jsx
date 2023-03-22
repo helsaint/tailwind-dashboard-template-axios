@@ -16,9 +16,9 @@ function DashboardCard09({DataSet}) {
   const [lstTop5GA, setTop5GA] = useState([]);
   const [lstTop5GF, setTop5GF] = useState([]);
   //var strTest = useContext(DataContext);
-  var strTest = DataSet;
   
   useEffect(()=>{
+    var strTest = DataSet;
     var temp_dict_F = {};
     var temp_dict_A = {};
     var top5_F = {};
@@ -30,7 +30,7 @@ function DashboardCard09({DataSet}) {
     let lst_squad = [];
     let lst_ga = [];
     let lst_gf = [];
-    axios.get('http://127.0.0.1:8000/fpl_page/fpl_api').then(res => {
+    axios.get('https://dashboards.aramotar.com/pl_results_api/pl_results_api').then(res => {
       for(let i =0; i < res.data.length; i++){
         str_squad_home = res.data[i].HomeTeam;
         str_squad_away = res.data[i].AwayTeam;
@@ -90,13 +90,15 @@ function DashboardCard09({DataSet}) {
         lst_ga.push(-1*temp_dict_A[strTest[0][i][0]]);
         lst_gf.push(temp_dict_F[strTest[0][i][0]]);
       }
+
+      setTop5Names(lst_squad);
+      setTop5GA(lst_ga);
+      setTop5GF(lst_gf);
+      setLoading(false);
+      setTop5Loading(strTest[1]);
     });
     //console.log("ALEXEI", strTest[0], "*********");
-    setTop5Names(lst_squad);
-    setTop5GA(lst_ga);
-    setTop5GF(lst_gf);
-    setLoading(false);
-    setTop5Loading(strTest[1]);
+    
   },[isLoading, isTop5Loading, DataSet]);
 
   if (isLoading || isTop5Loading) {
@@ -105,15 +107,15 @@ function DashboardCard09({DataSet}) {
 
   const x_labels = lstTop5Names;
   const y1_data = lstTop5GF;
-  const y2_data = lstTop5GA; 
+  const y2_data = lstTop5GA;
 
   const chartData = {
     labels: lstTop5Names,
     datasets: [
       // Light blue bars
       {
-        label: 'Stack 1',
-        data: y1_data,
+        label: 'Scored',
+        data: lstTop5GF,
         backgroundColor: tailwindConfig().theme.colors.indigo[500],
         hoverBackgroundColor: tailwindConfig().theme.colors.indigo[600],
         barPercentage: 0.66,
@@ -121,8 +123,8 @@ function DashboardCard09({DataSet}) {
       },
       // Blue bars
       {
-        label: 'Stack 2',
-        data: y2_data,
+        label: 'Conceded',
+        data: lstTop5GA,
         backgroundColor: tailwindConfig().theme.colors.indigo[200],
         hoverBackgroundColor: tailwindConfig().theme.colors.indigo[300],
         barPercentage: 0.66,
@@ -148,7 +150,7 @@ function DashboardCard09({DataSet}) {
       {/* Chart built with Chart.js 3 */}
       <div className="grow">
         {/* Change the height attribute to adjust the chart height */}
-        <BarChart data={chartData} width={595} height={248} />
+        <BarChart data={chartData} width={595} height={248} currency={false} />
       </div>
     </div>
   );
