@@ -21,7 +21,9 @@ import DashboardCard12 from '../partials/dashboard/DashboardCard12';
 import DashboardCard13 from '../partials/dashboard/DashboardCard13';
 import Banner from '../partials/Banner';
 import { Top5TeamsContext, PlayerScoreContext} from '../utils/Context';
+import { GCAStatsContext } from '../utils/Context';
 import {DataRetrieval, PlayerScoreRetrieval} from '../partials/actions/DataRetrieval';
+import { GoalCreatingActions } from '../partials/actions/DataRetrieval';
 
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -30,6 +32,9 @@ function Dashboard() {
 
   let DataPlayerScore = {};
   DataPlayerScore = PlayerScoreRetrieval();
+
+  let GCAStats = {};
+  GCAStats = GoalCreatingActions();
   
   return (
     <div className="flex h-screen overflow-hidden">
@@ -104,7 +109,9 @@ function Dashboard() {
               <DashboardCard10 />
               </PlayerScoreContext.Provider>
               {/* Card (Reasons for Refunds) */}
+              <GCAStatsContext.Provider value={GCAStats}>
               <DashboardCard11 />
+              </GCAStatsContext.Provider>
               {/* Card (Recent Activity) */}
               <DashboardCard12 />
               {/* Card (Income/Expenses) */}

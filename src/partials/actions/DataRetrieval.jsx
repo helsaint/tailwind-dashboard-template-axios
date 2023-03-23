@@ -99,4 +99,40 @@ export function PlayerScoreRetrieval(){
   return [dictTop10Players,isLoading];
 };
 
+export function GoalCreatingActions(){
+  const [isLoading, setLoading] = useState(true);
+  const [dictResults, setResults] = useState({});
+
+  useEffect(() =>{
+    let temp_result = {};
+    let int_gca = 0;
+    let int_pass_live_goal = 0;
+    let int_pass_dead_goal = 0;
+    let int_to_goal = 0;
+    let int_sh_goal = 0;
+    let int_fld_goal = 0;
+    let int_def_goal = 0;
+
+    axios.get('https://dashboards.aramotar.com/pl_api/api_players').then(res => {
+      for(let i = 0; i < res.data.length; i++){
+        int_pass_live_goal += res.data[i].pass_live_goal;
+        int_pass_dead_goal += res.data[i].pass_dead_goal;
+        int_to_goal += res.data[i].to_goal;
+        int_sh_goal += res.data[i].sh_goal;
+        int_fld_goal += res.data[i].fld_goal;
+        int_def_goal += res.data[i].def_goal;
+      }
+      temp_result = {'Live passes leading to a goal': int_pass_live_goal,
+                     'Dead passes leading to a goal': int_pass_dead_goal,
+                     'Takeons leading to a goal': int_to_goal,
+                     'Shots that lead to a goal': int_sh_goal,
+                     'Fouls drawn that lead to a goal': int_fld_goal,
+                     'Defensive actions that lead to a goal': int_def_goal};
+      setResults(temp_result);
+      setLoading(false);
+    });
+  },[]);
+  return [dictResults, isLoading];
+}
+
 //export default DataRetrieval;
