@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
+import fpl_players_code from '../../data/fpl_players_code.json';
 
 export function DataRetrieval(){
     const [isTop5Loading, setLoading] = useState(true);
@@ -49,6 +50,9 @@ export function PlayerScoreRetrieval(){
   const [isLoading, setLoading] = useState(true);
   const [dictTop10Players, setTop10Players] = useState();
 
+  const fpl_url = "https://resources.premierleague.com/premierleague/photos/players/40x40/pXXXXXX.png";
+  const fpl_na = "https://cdn-icons-png.flaticon.com/512/53/53254.png";
+
   useEffect(()=>{
     let temp_array = [];
     let temp_dict = {};
@@ -56,6 +60,9 @@ export function PlayerScoreRetrieval(){
     let temp_sca = 0;
     let temp_gca = 0;
     let temp_gca_sca = 0;
+    let arr_top_5 = [];
+    let str_pl_code = "";
+    let str_fpl_url = "";
     axios.get('https://dashboards.aramotar.com/pl_api/api_players').then(res => {
       for(let i = 0; i < res.data.length; i++){
         temp_dict = {};
@@ -72,7 +79,19 @@ export function PlayerScoreRetrieval(){
       temp_array.sort(function(a,b){
         return b.total - a.total
       })
-      setTop10Players(temp_array.slice(0,5));
+      arr_top_5 = temp_array.slice(0,5);
+
+      for(let i = 0; i < arr_top_5.length; i++){
+        try{
+          str_pl_code = fpl_players_code[0][arr_top_5[i]['name']]['fpl_code'];
+          str_fpl_url = fpl_url.replace("XXXXXX", str_pl_code);
+          arr_top_5[i]['image'] = str_fpl_url;
+        }catch{
+          arr_top_5[i]['image'] = fpl_na;
+        }
+      }      
+
+      setTop10Players(arr_top_5);
       setLoading(false);
   });
   },[]);

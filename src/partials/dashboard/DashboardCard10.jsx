@@ -22,7 +22,7 @@ function DashboardCard10() {
       for(let i = 0; i < playerScores[0].length; i++){
         dict_temp = {};
         dict_temp['id'] = i;
-        dict_temp['image'] = Image01;
+        dict_temp['image'] = playerScores[0][i]['image'];
         dict_temp['name'] = playerScores[0][i]['name'];
         dict_temp['gca'] = playerScores[0][i]['gca'];
         dict_temp['sca'] = playerScores[0][i]['sca'];
