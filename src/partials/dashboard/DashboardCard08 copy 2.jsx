@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import LineChart from '../../charts/LineChart02';
 import pl_clubs_alias from '../../data/pl_clubs_alias.json';
 import { TOP5 } from './DashboardCard07';
-import { Top5TeamsContext } from '../../utils/Context';
 
 
 // Import utilities
@@ -11,9 +10,7 @@ import axios from 'axios';
 
 function DashboardCard08() {
 
-  const ctx_team_rank = useContext(Top5TeamsContext);
   const [isLoading, setLoading] = useState(true);
-  const [isTop5Loading, setTop5Loading] = useState(true);
   const [time_series_goals_by_top5, setTimeSeries] = useState();
   const [games_played, setGamesPlayed] = useState();
   const [goals_scored, setGoalsScored] = useState();
@@ -53,50 +50,30 @@ function DashboardCard08() {
       let int_games = 0;
       let int_goals = 0;
       
-      if(!(ctx_team_rank[1])){
-        for(let i = 0; i < ctx_team_rank[0].length; i++ ){
-          let str_temp = ctx_team_rank[0][i][0];
-          dict_top5[str_temp] = dict_temp[str_temp];
-          if(int_games < dict_temp[str_temp].length){
-            int_games = dict_temp[str_temp].length;
-          }
-          int_goals = dict_temp[str_temp].reduce(
-            (accumulator, currentValue) => accumulator + currentValue,
-            int_goals
-          );
+      for(let key in TOP5){
+        let str_temp = TOP5[key][0];
+        dict_top5[str_temp] = dict_temp[str_temp];
+        if(int_games < dict_temp[str_temp].length){
+          int_games = dict_temp[str_temp].length;
         }
+        int_goals = dict_temp[str_temp].reduce(
+          (accumulator, currentValue) => accumulator + currentValue,
+          int_goals
+        );
       }
-
-      /*The below code was using a TOP5 variable that was exported 
-      from DB07. This caused problems as it would only update when
-      TOP5 was updated constantly calling for refreshing the page.
-      We now use the useContext instead. */
-      //dict_top5 = {};
-      //for(let key in TOP5){
-      //  let str_temp = TOP5[key][0];
-      //  dict_top5[str_temp] = dict_temp[str_temp];
-      //  if(int_games < dict_temp[str_temp].length){
-      //    int_games = dict_temp[str_temp].length;
-      //  }
-      //  int_goals = dict_temp[str_temp].reduce(
-      //    (accumulator, currentValue) => accumulator + currentValue,
-      //    int_goals
-      //  );
-      //}
       
       setGoalsScored(int_goals);
       setGamesPlayed(int_games);
       setTimeSeries(dict_top5);
-      setTop5Loading(ctx_team_rank[1]);
       setLoading(false);
     }).catch((exception) => {
       console.log("PL Site Broken")
     });
     
-  },[isLoading, isTop5Loading, ctx_team_rank]);
+  },[]);
 
 
-  if (isLoading || isTop5Loading) {
+  if (isLoading) {
     return <div className="App">Cunxeing...</div>;
   }
   

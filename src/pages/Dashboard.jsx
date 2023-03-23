@@ -20,7 +20,7 @@ import DashboardCard11 from '../partials/dashboard/DashboardCard11';
 import DashboardCard12 from '../partials/dashboard/DashboardCard12';
 import DashboardCard13 from '../partials/dashboard/DashboardCard13';
 import Banner from '../partials/Banner';
-import { DataContext, PlayerScoreContext} from '../utils/Context';
+import { Top5TeamsContext, PlayerScoreContext} from '../utils/Context';
 import {DataRetrieval, PlayerScoreRetrieval} from '../partials/actions/DataRetrieval';
 
 function Dashboard() {
@@ -92,7 +92,9 @@ function Dashboard() {
               {/* Table (Top Channels) */}
               <DashboardCard07 />
               {/* Line chart (Sales Over Time) */}
+              <Top5TeamsContext.Provider value={DataSet}>
               <DashboardCard08 />
+              </Top5TeamsContext.Provider>
               {/* Stacked bar chart (Sales VS Refunds) */}
               {/*<DataContext.Provider value={DataSet}>*/}
               <DashboardCard09 DataSet={DataSet}/>
