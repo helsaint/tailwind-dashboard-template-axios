@@ -7,18 +7,6 @@ import axios from 'axios';
 
 function DashboardCard05() {
 
-  //Code commented out below is for RSS connectivity will be used elsewhere.
-
-  //useEffect(()=>{
-  //  var parser, xml_rss;
-  //  axios.get('https://www.espn.co.uk/espn/rss/football/news').then(res=>{
-  //    parser = new DOMParser();
-  //    xml_rss = parser.parseFromString(res.data,"text/xml");
-  //    let xml_items = xml_rss.getElementsByTagName("item");
-  //    console.log(xml_items.length);
-  //  });
-  //},[])
-
   const [isLoading, setLoading] = useState(true);
   const [dictCountryPlayers, setCountryPlayers] = useState();
 

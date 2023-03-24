@@ -38,10 +38,6 @@ function DashboardCard11() {
                                     tailwindConfig().theme.colors.pink[int_background]];
 
   useEffect(()=>{
-    let temp_result = {
-      labels:['Reasons'],
-      datasets:[],
-    };
     let temp_datasets = [];
     
     if(!(gcaContext[1])){

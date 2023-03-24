@@ -22,8 +22,10 @@ import DashboardCard13 from '../partials/dashboard/DashboardCard13';
 import Banner from '../partials/Banner';
 import { Top5TeamsContext, PlayerScoreContext} from '../utils/Context';
 import { GCAStatsContext } from '../utils/Context';
+import { RSSPLContext } from '../utils/Context';
 import {DataRetrieval, PlayerScoreRetrieval} from '../partials/actions/DataRetrieval';
 import { GoalCreatingActions } from '../partials/actions/DataRetrieval';
+import { PLRSSNewsReader } from '../partials/actions/DataRetrieval';
 
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -35,6 +37,9 @@ function Dashboard() {
 
   let GCAStats = {};
   GCAStats = GoalCreatingActions();
+
+  let RSSFeed = {};
+  RSSFeed = PLRSSNewsReader();
   
   return (
     <div className="flex h-screen overflow-hidden">
@@ -113,7 +118,9 @@ function Dashboard() {
               <DashboardCard11 />
               </GCAStatsContext.Provider>
               {/* Card (Recent Activity) */}
+              <RSSPLContext.Provider value={RSSFeed}>
               <DashboardCard12 />
+              </RSSPLContext.Provider>
               {/* Card (Income/Expenses) */}
               <DashboardCard13 />
               

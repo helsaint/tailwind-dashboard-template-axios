@@ -2,6 +2,8 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import fpl_players_code from '../../data/fpl_players_code.json';
 
+/* Sorry about the generic name just. This function simply retrieves
+the top 5 teams based on a combination of sca and gca stats.*/
 export function DataRetrieval(){
     const [isTop5Loading, setLoading] = useState(true);
     const [arr_top_5, setTop5] = useState();
@@ -46,6 +48,9 @@ export function DataRetrieval(){
     return [arr_top_5, isTop5Loading];
 };
 
+
+/** This Function retrieves the top 5 players based on sca+gca. 
+ * It also uses a json file to get links to player's profile pictures **/
 export function PlayerScoreRetrieval(){
   const [isLoading, setLoading] = useState(true);
   const [dictTop10Players, setTop10Players] = useState();
@@ -99,6 +104,9 @@ export function PlayerScoreRetrieval(){
   return [dictTop10Players,isLoading];
 };
 
+/** Function retrieves stats for goal creating actions that
+ * will be passed to a chartjs bar chart as is.
+ */
 export function GoalCreatingActions(){
   const [isLoading, setLoading] = useState(true);
   const [dictResults, setResults] = useState({});
@@ -135,4 +143,32 @@ export function GoalCreatingActions(){
   return [dictResults, isLoading];
 }
 
-//export default DataRetrieval;
+export function PLRSSNewsReader(){
+  const [isLoading, setLoading] = useState(true);
+  const [feedData, setFeedData] = useState();
+
+  useEffect(()=>{
+    let parser, xml_rss;
+    let arr_result = [];
+    let str_html = "";
+    let str_link = "";
+    axios.get('https://www.espn.co.uk/espn/rss/football/news').then(res=>{
+      parser = new DOMParser();
+      xml_rss = parser.parseFromString(res.data,"text/xml");
+      let xml_items = xml_rss.getElementsByTagName("item");
+      for(let i =0; i < xml_items.length; i++){
+        str_html = xml_items[i]['outerHTML'];
+        str_link = str_html.match("https://www.espn.co.uk" + "(.*)" + "]]></link>")
+        arr_result.push([xml_items[i]['firstChild']['textContent'],str_link[0].slice(0,-10)]);
+      }
+      setFeedData(arr_result);
+      setLoading(false);
+    });
+  },[]);
+
+  if (isLoading) {
+    return [<div className="App">Cunxeing...</div>, isLoading];
+}
+
+  return [feedData, isLoading];
+}
