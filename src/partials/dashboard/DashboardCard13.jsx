@@ -1,115 +1,87 @@
-import React from 'react';
+import React,{useContext, useEffect, useState} from 'react';
+import { TransfrMrktContext } from '../../utils/Context';
+import Info from '../../utils/Info';
 
 function DashboardCard13() {
+
+  const [isLoading, setLoading] = useState(true);
+  const [isTrnsfrMrktLoading, setTransfrMrktLoading] = useState(true);
+  const [dictTrnsfrMrkt, setTrnsfrMrkt] = useState(true);
+  const ctxTrnsfrMrkt = useContext(TransfrMrktContext);
+
+  useEffect(()=>{
+    let arr_data = [];
+    let int_max = 5;
+    let int_count = 0;
+    if(!(ctxTrnsfrMrkt[1])){
+      for(let key in ctxTrnsfrMrkt[0]){
+        let temp_array = [];
+        if(int_count > int_max){
+          break;
+        }
+        int_count += 1;
+        temp_array.push(key);
+        temp_array.push(ctxTrnsfrMrkt[0][key][0]);
+        temp_array.push(ctxTrnsfrMrkt[0][key][1]);
+        arr_data.push(temp_array);
+      }
+    }
+    setTrnsfrMrkt(arr_data);
+    setTransfrMrktLoading(false);
+    setLoading(false);
+
+  },[ctxTrnsfrMrkt]);
+  if (isTrnsfrMrktLoading || isLoading) {
+    return <div className="App">Cunxeing...</div>;
+  };
   return (
     <div className="col-span-full xl:col-span-6 bg-white shadow-lg rounded-sm border border-slate-200">
-      <header className="px-5 py-4 border-b border-slate-100">
-        <h2 className="font-semibold text-slate-800">Income/Expenses</h2>
+      <header className="px-5 py-4 border-b border-slate-100 flex items-center">
+        <h2 className="font-semibold text-slate-800">Most Valuable Players</h2>
+        <Info className="ml-2" containerClassName="min-w-80">
+          <div className="text-sm">Data is based on TransferMarkt web scrape</div>
+        </Info>
       </header>
       <div className="p-3">
 
-        {/* Card content */}
-        {/* "Today" group */}
-        <div>
-          <header className="text-xs uppercase text-slate-400 bg-slate-50 rounded-sm font-semibold p-2">Today</header>
-          <ul className="my-1">
-            {/* Item */}
-            <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-rose-500 my-2 mr-3">
-                <svg className="w-9 h-9 fill-current text-rose-50" viewBox="0 0 36 36">
-                  <path d="M17.7 24.7l1.4-1.4-4.3-4.3H25v-2H14.8l4.3-4.3-1.4-1.4L11 18z" />
-                </svg>
-              </div>
-              <div className="grow flex items-center border-b border-slate-100 text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center"><a className="font-medium text-slate-800 hover:text-slate-900" href="#0">Qonto</a> billing</div>
-                  <div className="shrink-0 self-start ml-2">
-                    <span className="font-medium text-slate-800">-$49.88</span>
-                  </div>
-                </div>
-              </div>
-            </li>
-            {/* Item */}
-            <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-green-500 my-2 mr-3">
-                <svg className="w-9 h-9 fill-current text-green-50" viewBox="0 0 36 36">
-                  <path d="M18.3 11.3l-1.4 1.4 4.3 4.3H11v2h10.2l-4.3 4.3 1.4 1.4L25 18z" />
-                </svg>
-              </div>
-              <div className="grow flex items-center border-b border-slate-100 text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center"><a className="font-medium text-slate-800 hover:text-slate-900" href="#0">Cruip.com</a> Market Ltd 70 Wilson St London</div>
-                  <div className="shrink-0 self-start ml-2">
-                    <span className="font-medium text-green-500">+249.88</span>
-                  </div>
-                </div>
-              </div>
-            </li>
-            {/* Item */}
-            <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-green-500 my-2 mr-3">
-                <svg className="w-9 h-9 fill-current text-green-50" viewBox="0 0 36 36">
-                  <path d="M18.3 11.3l-1.4 1.4 4.3 4.3H11v2h10.2l-4.3 4.3 1.4 1.4L25 18z" />
-                </svg>
-              </div>
-              <div className="grow flex items-center border-b border-slate-100 text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center"><a className="font-medium text-slate-800 hover:text-slate-900" href="#0">Notion Labs Inc</a></div>
-                  <div className="shrink-0 self-start ml-2">
-                    <span className="font-medium text-green-500">+99.99</span>
-                  </div>
-                </div>
-              </div>
-            </li>
-            {/* Item */}
-            <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-green-500 my-2 mr-3">
-                <svg className="w-9 h-9 fill-current text-green-50" viewBox="0 0 36 36">
-                  <path d="M18.3 11.3l-1.4 1.4 4.3 4.3H11v2h10.2l-4.3 4.3 1.4 1.4L25 18z" />
-                </svg>
-              </div>
-              <div className="grow flex items-center border-b border-slate-100 text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center"><a className="font-medium text-slate-800 hover:text-slate-900" href="#0">Market Cap Ltd</a></div>
-                  <div className="shrink-0 self-start ml-2">
-                    <span className="font-medium text-green-500">+1,200.88</span>
-                  </div>
-                </div>
-              </div>
-            </li>
-            {/* Item */}
-            <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-slate-200 my-2 mr-3">
-                <svg className="w-9 h-9 fill-current text-slate-400" viewBox="0 0 36 36">
-                  <path d="M21.477 22.89l-8.368-8.367a6 6 0 008.367 8.367zm1.414-1.413a6 6 0 00-8.367-8.367l8.367 8.367zM18 26a8 8 0 110-16 8 8 0 010 16z" />
-                </svg>
-              </div>
-              <div className="grow flex items-center border-b border-slate-100 text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center"><a className="font-medium text-slate-800 hover:text-slate-900" href="#0">App.com</a> Market Ltd 70 Wilson St London</div>
-                  <div className="shrink-0 self-start ml-2">
-                    <span className="font-medium text-slate-800 line-through">+$99.99</span>
-                  </div>
-                </div>
-              </div>
-            </li>
-            {/* Item */}
-            <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-rose-500 my-2 mr-3">
-                <svg className="w-9 h-9 fill-current text-rose-50" viewBox="0 0 36 36">
-                  <path d="M17.7 24.7l1.4-1.4-4.3-4.3H25v-2H14.8l4.3-4.3-1.4-1.4L11 18z" />
-                </svg>
-              </div>
-              <div className="grow flex items-center text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center"><a className="font-medium text-slate-800 hover:text-slate-900" href="#0">App.com</a> Market Ltd 70 Wilson St London</div>
-                  <div className="shrink-0 self-start ml-2">
-                    <span className="font-medium text-slate-800">-$49.88</span>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
+        {/* Table */}
+        <div className="overflow-x-auto">
+          <table className="table-auto w-full">
+            {/* Table header */}
+            <thead className="text-xs font-semibold uppercase text-slate-400 bg-slate-50">
+              <tr>
+                <th className="p-2 whitespace-nowrap">
+                  <div className="font-semibold text-left">Name</div>
+                </th>
+                <th className="p-2 whitespace-nowrap">
+                  <div className="font-semibold text-left">Valuation</div>
+                </th>
+              </tr>
+            </thead>
+            {/* Table body */}
+            <tbody className="text-sm divide-y divide-slate-100">
+              {
+                dictTrnsfrMrkt.map(customer => {
+                  return (
+                    <tr key={customer[0]}>
+                      <td className="p-2 whitespace-nowrap"> 
+                        <div className="flex items-center">
+                          <div className="w-10 h-10 shrink-0 mr-2 sm:mr-3">
+                            <img className="rounded-full" src={customer[1]} width="40" height="40" alt={customer.name} />
+                          </div>
+                          <div className="font-medium text-slate-800">{customer[0]}</div>
+                        </div>
+                      </td>
+                      <td className="p-2 whitespace-nowrap">
+                        <div className="text-left">{customer[2]}</div>
+                      </td>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+          </table>
+
         </div>
 
       </div>

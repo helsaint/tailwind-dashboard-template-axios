@@ -143,6 +143,9 @@ export function GoalCreatingActions(){
   return [dictResults, isLoading];
 }
 
+/** RSS news reader from ESPN. Using axios and xml parsing to get 
+ * individual stories
+ */
 export function PLRSSNewsReader(){
   const [isLoading, setLoading] = useState(true);
   const [feedData, setFeedData] = useState();
@@ -171,4 +174,20 @@ export function PLRSSNewsReader(){
 }
 
   return [feedData, isLoading];
+}
+
+export function TransfrMrktData(){
+  const [isLoading, setLoading] = useState(true);
+  const [dictResult, setResult] = useState();
+  useEffect(()=>{
+    axios.get('https://dashboards.aramotar.com/web_scrape_api/web_scrape_api/').then(res=>{
+      setResult(res.data);
+      setLoading(false);
+    });
+  },[]);
+  if (isLoading) {
+    return [<div className="App">Cunxeing...</div>, isLoading];
+  }
+  return [dictResult, isLoading];
+
 }

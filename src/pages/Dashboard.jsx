@@ -23,9 +23,11 @@ import Banner from '../partials/Banner';
 import { Top5TeamsContext, PlayerScoreContext} from '../utils/Context';
 import { GCAStatsContext } from '../utils/Context';
 import { RSSPLContext } from '../utils/Context';
+import { TransfrMrktContext } from '../utils/Context';
 import {DataRetrieval, PlayerScoreRetrieval} from '../partials/actions/DataRetrieval';
 import { GoalCreatingActions } from '../partials/actions/DataRetrieval';
 import { PLRSSNewsReader } from '../partials/actions/DataRetrieval';
+import { TransfrMrktData } from '../partials/actions/DataRetrieval';
 
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -40,6 +42,9 @@ function Dashboard() {
 
   let RSSFeed = {};
   RSSFeed = PLRSSNewsReader();
+
+  let TransfrMarkt = {};
+  TransfrMarkt = TransfrMrktData();
   
   return (
     <div className="flex h-screen overflow-hidden">
@@ -122,7 +127,9 @@ function Dashboard() {
               <DashboardCard12 />
               </RSSPLContext.Provider>
               {/* Card (Income/Expenses) */}
+              <TransfrMrktContext.Provider value={TransfrMarkt}>
               <DashboardCard13 />
+              </TransfrMrktContext.Provider>
               
             </div>
 
