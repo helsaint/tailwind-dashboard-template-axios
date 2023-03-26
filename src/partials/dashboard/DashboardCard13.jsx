@@ -23,6 +23,7 @@ function DashboardCard13() {
         temp_array.push(key);
         temp_array.push(ctxTrnsfrMrkt[0][key][0]);
         temp_array.push(ctxTrnsfrMrkt[0][key][1]);
+        temp_array.push(ctxTrnsfrMrkt[0][key][2]);
         arr_data.push(temp_array);
       }
     }
@@ -56,6 +57,9 @@ function DashboardCard13() {
                 <th className="p-2 whitespace-nowrap">
                   <div className="font-semibold text-left">Valuation</div>
                 </th>
+                <th className="p-2 whitespace-nowrap">
+                  <div className="font-semibold text-left">Age</div>
+                </th>
               </tr>
             </thead>
             {/* Table body */}
@@ -74,6 +78,9 @@ function DashboardCard13() {
                       </td>
                       <td className="p-2 whitespace-nowrap">
                         <div className="text-left">{customer[2]}</div>
+                      </td>
+                      <td className="p-2 whitespace-nowrap">
+                        <div className="text-left">{customer[3]}</div>
                       </td>
                     </tr>
                   )
