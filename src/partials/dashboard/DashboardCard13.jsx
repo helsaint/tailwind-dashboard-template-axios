@@ -24,6 +24,7 @@ function DashboardCard13() {
         temp_array.push(ctxTrnsfrMrkt[0][key][0]);
         temp_array.push(ctxTrnsfrMrkt[0][key][1]);
         temp_array.push(ctxTrnsfrMrkt[0][key][2]);
+        temp_array.push(ctxTrnsfrMrkt[0][key][3]);
         arr_data.push(temp_array);
       }
     }
@@ -73,7 +74,9 @@ function DashboardCard13() {
                           <div className="w-10 h-10 shrink-0 mr-2 sm:mr-3">
                             <img className="rounded-full" src={customer[1]} width="40" height="40" alt={customer.name} />
                           </div>
-                          <div className="font-medium text-slate-800">{customer[0]}</div>
+                          <div className="font-medium text-slate-800">
+                            <a href={customer[4]} target="_blank">{customer[0]}</a>
+                          </div>
                         </div>
                       </td>
                       <td className="p-2 whitespace-nowrap">
